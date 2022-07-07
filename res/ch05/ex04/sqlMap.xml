@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC './/mybatis.org//DTD config 3.0//EN'
+		'http://mybatis.org/dtd/mybatis-3-mapper.dtd'> 
+		
+<mapper namespace='ch05.ex04.Map'>
+	<update id='updateUser'>
+		update users
+		<set> <!-- set절에서 적어도 하나는 true로 나오게 코드를 짜야 update문 자체가 오류가 나지 않는다. if문중에 true가 나오는 절만 본문에 붙는다. -->
+			<if test='userName != null'> user_name = #{userName}</if>
+			<if test='regDate != null'> reg_date =#{regDate}</if>
+		</set>
+		where user_id = #{userId}
+	</update>
+</mapper>

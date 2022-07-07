@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC './/mybatis.org//DTD config 3.0//EN'
+		'http://mybatis.org/dtd/mybatis-3-mapper.dtd'> 
+		
+<mapper namespace='ch04.ex01.Map'>
+	<select id='selectUsers' resultMap='userMap'>
+		select user_id, user_name, reg_date
+		from users
+		order by user_id
+	</select>
+	
+	<select id='selectPosts' resultType='ch04.domain.Post'>
+		select post_title title, post_content content
+		from posts
+		where user_id = #{useId}
+	</select>
+	
+	<resultMap id='userMap' type='ch04.domain.User'>
+		<constructor>
+			<idArg column='user_id' javaType='_int'/>
+			<arg column='user_name' javaType='string'/>
+			<arg column='reg_date' javaType='java.time.LocalDate'/>
+		</constructor>
+		<collection property='posts' column='user_id' select='selectPosts'/>
+	</resultMap>
+</mapper>

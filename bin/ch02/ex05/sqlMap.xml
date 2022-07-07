@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC './/mybatis.org//DTD config 3.0//EN'
+		'http://mybatis.org/dtd/mybatis-3-mapper.dtd'> <!-- meta data -->
+		
+<mapper namespace='ch02.ex05.Map'><!-- ch02에 있는 Map interface(객체)명을 쓴것 -->
+	<delete id='deleteUser'>
+		delete users
+		where user_id = #{userId}
+	</delete>
+</mapper>

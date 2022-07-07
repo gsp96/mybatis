@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC './/mybatis.org//DTD config 3.0//EN'
+		'http://mybatis.org/dtd/mybatis-3-mapper.dtd'> <!-- meta data -->
+		
+<mapper namespace='ch02.ex04.Map'><!-- ch02에 있는 Map interface(객체)명을 쓴것 -->
+	<update id='updateUser'>
+		update users
+		set user_name = #{userName}, reg_date = #{regDate}
+		where user_id = #{userId}
+	</update>
+</mapper>

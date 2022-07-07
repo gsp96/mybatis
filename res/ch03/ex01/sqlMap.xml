@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC './/mybatis.org//DTD config 3.0//EN'
+		'http://mybatis.org/dtd/mybatis-3-mapper.dtd'> <!-- meta data -->
+		
+<mapper namespace='ch03.ex01.Map'><!-- ch02에 있는 Map interface(객체)명을 쓴것 -->
+	<select id='selectUsers' resultMap='userMap'>
+		select user_id, user_name, reg_date
+		from users
+		order by user_id
+	</select>
+	
+	<select id='selectAddress' resultType='address'>
+		select address
+		from addresses
+		where user_id = #{userId}
+	</select>
+	
+	<resultMap id='userMap' type='myUser'>
+		<id property='userId' column='user_id'/>
+		<result property='userName' column='user_name'/>
+		<result property='regDate' column='reg_date'/>
+		<association property='address' column='user_id' select='selectAddress'/> <!-- selectaddress한테 parameter로 column값을 넘겨줘서  address객체을 불러온다 -->
+	</resultMap>
+</mapper>

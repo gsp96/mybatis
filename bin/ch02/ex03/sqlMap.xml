@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC './/mybatis.org//DTD config 3.0//EN'
+		'http://mybatis.org/dtd/mybatis-3-mapper.dtd'> <!-- meta data -->
+		
+<mapper namespace='ch02.ex03.Map'><!-- ch02에 있는 Map interface(객체)명을 쓴것 -->
+	<insert id='insertUser'>  <!-- 코드도 깨끗하고 가독성도 좋은 방법 --> <!-- method의 parameter가 domain일 경우 -->
+		insert into users values( 
+			#{userId, jdbcType=NUMERIC},
+			#{userName, jdbcType=VARCHAR},
+			#{regDate, jdbcType=DATE})
+	</insert>
+	
+	<insert id='insertUser2'>  <!-- parameter가 숫자,문자,날짜일경우 interface에서 @param을 통해 각각이 이름을 지정해줘야 한다. -->
+		insert into users values(#{userId}, #{userName}, #{regDate})
+	</insert>
+	
+	<insert id='insertUser3'>
+		insert into users values(#{param1}, #{param2}, #{param3})
+	</insert>
+</mapper>

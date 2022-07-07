@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE mapper PUBLIC './/mybatis.org//DTD config 3.0//EN'
+		'http://mybatis.org/dtd/mybatis-3-mapper.dtd'> 
+		
+<mapper namespace='ch05.ex02.Map'>
+	<select id='selectUser' resultMap='userMap'>
+		<bind name='title' value='"%" + post.title + "%"'/>
+		<bind name='content' value='"%" + post.content + "%"'/>
+		select users.user_id, user_name, reg_date, post_title, post_content
+		from users join posts
+		on users.user_id = posts.user_id
+		where user_name = #{userName}
+		<choose>	<!--choose 안의 when 은 둘중에 하나만 선택되고 둘다 아니라면 oherwise가 선택된다 아래 code에서는 title 변수를 사용한것-->
+			<when test='post != null and post.title != null'>
+				and posts.title like #{title}
+			</when>
+			<when test='post != null and post.content.isEmpty()'>
+				and posts.post_content like #{content}
+			</when>
+			<otherwise>
+				and posts.user_id is not null
+			</otherwise>
+		</choose>
+	</select>
+	
+	<resultMap id='userMap' type='ch05.domain.User'>
+		<id property='userId' column='user_id'/>
+		<result property='userName' column='user_name'/>
+		<result property='regDate' column='reg_date'/>
+		<collection property='posts' columnPrefix='post_' ofType='ch05.domain.Post'><!-- columnPrefix는 column명 앞에 붙는 접두사를 고정한다. -->
+			<result property='title' column='title'/>
+			<result property='content' column='content'/>
+		</collection>
+	</resultMap>
+</mapper>
